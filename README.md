@@ -8,18 +8,15 @@
 Причина - мы больше не используем Битрикс в своих проектах.
 Если вам интересен этот проект и вы хотите заняться его поддержкой - форкните его и создайте Issue в данном репозитории чтобы мы поместили здесь ссылку на форк.
 
-Форки:
-- https://github.com/informunity/bitrix-migrations
-
 # Bitrix-migrations
 
 *Миграции БД для Битрикса и не только*
 
 ## Установка
 
-1) `composer require arrilot/bitrix-migrations`
+1) `composer require strong/bitrix-migrations`
 
-2) `cp vendor/arrilot/bitrix-migrations/migrator migrator` - копируем исполняемый файл в удобное место.
+2) `cp vendor/strong/bitrix-migrations/migrator migrator` - копируем исполняемый файл в удобное место.
 
 3) заходим внутрь и удостоверяемся что задается правильный $_SERVER['DOCUMENT_ROOT']. Меняем настройки если нужно
 
