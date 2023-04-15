@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Strong/bitrix-migrations",
   "require": {
     "php": ">=8.1",
-    "symfony/console": "~6",
+    "symfony/console": "^5.4",
     "tightenco/collect": "9.*"
   },
   "require-dev": {
