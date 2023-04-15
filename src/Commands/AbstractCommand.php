@@ -50,7 +50,7 @@ abstract class AbstractCommand extends Command
         $this->output = $output;
 
         try {
-            return $this->fire();
+            return $this->fire() ?? 0;
         } catch (DomainException $e) {
             return 1;
         } catch (Exception $e) {
