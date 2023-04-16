@@ -38,11 +38,11 @@ class FileStorage implements FileStorageInterface
      *
      * @param $path
      *
-     * @return void
+     * @return object
      */
     public function requireFile($path)
     {
-        require_once $path;
+        return require $path;
     }
 
     /**
@@ -55,7 +55,9 @@ class FileStorage implements FileStorageInterface
     public function createDirIfItDoesNotExist($dir)
     {
         if (!file_exists($dir)) {
-            mkdir($dir, 0755, true);
+            if (!mkdir($dir, 0755, true) && !is_dir($dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+            }
         }
     }
 

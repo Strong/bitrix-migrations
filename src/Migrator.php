@@ -111,11 +111,10 @@ class Migrator
         $this->files->createDirIfItDoesNotExist($targetDir);
 
         $fileName = $this->constructFileName($name);
-        $className = $this->getMigrationClassNameByFileName($fileName);
         $templateName = $this->templates->selectTemplate($templateName);
 
         $template = $this->files->getContent($this->templates->getTemplatePath($templateName));
-        $template = $this->replacePlaceholdersInTemplate($template, array_merge($replace, ['className' => $className]));
+        $template = $this->replacePlaceholdersInTemplate($template, $replace);
 
         $this->files->putContent($targetDir.'/'.$fileName.'.php', $template);
 
@@ -320,23 +319,6 @@ class Migrator
     }
 
     /**
-     * Get a migration class name by a migration file name.
-     *
-     * @param string $file
-     *
-     * @return string
-     */
-    protected function getMigrationClassNameByFileName($file)
-    {
-        $fileExploded = explode('_', $file);
-
-        $datePart = implode('_', array_slice($fileExploded, 0, 5));
-        $namePart = implode('_', array_slice($fileExploded, 5));
-
-        return Helpers::studly($namePart.'_'.$datePart);
-    }
-
-    /**
      * Replace all placeholders in the stub.
      *
      * @param string $template
@@ -364,14 +346,10 @@ class Migrator
      */
     protected function getMigrationObjectByFileName($file)
     {
-        $class = $this->getMigrationClassNameByFileName($file);
-
-        $this->requireMigrationFile($file);
-
-        $object = new $class();
+        $object = $this->requireMigrationFile($file);
 
         if (!$object instanceof MigrationInterface) {
-            throw new Exception("Migration class {$class} must implement Arrilot\\BitrixMigrations\\Interfaces\\MigrationInterface");
+            throw new Exception("Migration class from $file must implement Arrilot\\BitrixMigrations\\Interfaces\\MigrationInterface");
         }
 
         return $object;
@@ -382,11 +360,11 @@ class Migrator
      *
      * @param string $file
      *
-     * @return void
+     * @return object
      */
     protected function requireMigrationFile($file)
     {
-        $this->files->requireFile($this->getMigrationFilePath($file));
+        return $this->files->requireFile($this->getMigrationFilePath($file));
     }
 
     /**
