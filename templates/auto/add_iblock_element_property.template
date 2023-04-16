@@ -3,7 +3,7 @@
 use Arrilot\BitrixMigrations\BaseMigrations\BitrixMigration;
 use Arrilot\BitrixMigrations\Exceptions\MigrationException;
 
-class __className__ extends BitrixMigration
+return new class extends BitrixMigration
 {
     /**
      * Run the migration.
@@ -40,4 +40,4 @@ class __className__ extends BitrixMigration
             throw new MigrationException('Ошибка при удалении свойства инфоблока '.$ibp->LAST_ERROR);
         }
     }
-}
+};
